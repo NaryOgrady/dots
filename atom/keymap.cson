@@ -43,3 +43,15 @@
 'body atom-text-editor.autocomplete-active':
   'ctrl-k': 'core:move-up'
   'ctrl-j': 'core:move-down'
+
+# Pane split right and move active item
+'body':
+  'ctrl-k l': 'pane:split-right-and-move-active-item'
+# Pane split left and move active item
+  'ctrl-k h': 'pane:split-left-and-move-active-item'
+
+# Toggle panes
+  'alt-k': 'window:focus-next-pane'
+
+# Move item to next pane
+  'ctrl-alt-k': 'move-panes:move-next'
