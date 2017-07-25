@@ -4,10 +4,8 @@ emmet@2.4.3
 file-icons@2.0.17
 language-javascript-jsx@0.3.7
 linter@1.11.23
-linter-jshint@3.0.3
 move-panes@0.2.0
 react@0.16.2
 tool-bar@1.0.1
 tool-bar-atom@1.7.0
 vim-mode-plus@0.82.3
-
