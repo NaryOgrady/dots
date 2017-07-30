@@ -1,0 +1,57 @@
+# Your keymap
+#
+# Atom keymaps work similarly to style sheets. Just as style sheets use
+# selectors to apply styles to elements, Atom keymaps use selectors to associate
+# keystrokes with events in specific contexts. Unlike style sheets however,
+# each selector can only be declared once.
+#
+# You can create a new keybinding in this file by typing "key" and then hitting
+# tab.
+#
+# Here's an example taken from Atom's built-in keymap:
+#
+# 'atom-text-editor':
+#   'enter': 'editor:newline'
+#
+# 'atom-workspace':
+#   'ctrl-shift-p': 'core:move-up'
+#   'ctrl-p': 'core:move-down'
+#
+# You can find more information about keymaps in these guides:
+# * https://atom.io/docs/latest/using-atom-basic-customization#customizing-key-bindings
+# * https://atom.io/docs/latest/behind-atom-keymaps-in-depth
+#
+# This file uses CoffeeScript Object Notation (CSON).
+# If you are unfamiliar with CSON, you can read more about it in the
+# Atom Flight Manual:
+# https://atom.io/docs/latest/using-atom-basic-customization#cson
+'atom-text-editor.vim-mode-plus.insert-mode':
+  # vim-mode: exit insert mode with 'jj'
+  'j': 'exit-insert-mode-if-preceded-by-j'
+  # expand emmet abreviation
+  'ctrl-e': 'emmet:expand-abbreviation'
+
+# Stop emmet from hijacking tab from snippets and autocomplete
+'atom-text-editor.autocomplete-active:not([mini])':
+  'tab': 'autocomplete-plus:confirm'
+
+# Stop emmet from hijacking tab from snippet tab stops
+'atom-text-editor[data-grammar="text html basic"]:not([mini]), atom-text-editor[data-grammar~="jade"]:not([mini]), atom-text-editor[data-grammar~="css"]:not([mini]), atom-text-editor[data-grammar~="sass"]:not([mini])':
+  'tab': 'snippets:next-tab-stop'
+
+# Autocomplete plus move remaps
+'body atom-text-editor.autocomplete-active':
+  'ctrl-k': 'core:move-up'
+  'ctrl-j': 'core:move-down'
+
+# Pane split right and move active item
+'body':
+  'ctrl-k l': 'pane:split-right-and-move-active-item'
+# Pane split left and move active item
+  'ctrl-k h': 'pane:split-left-and-move-active-item'
+
+# Toggle panes
+  'alt-k': 'window:focus-next-pane'
+
+# Move item to next pane
+  'ctrl-alt-k': 'move-panes:move-next'
