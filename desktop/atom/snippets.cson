@@ -1,6 +1,0 @@
-# js snippets
-
-".source.js":
-  "Req":
-    "prefix": "req"
-    "body": "var $1 = require('$2');$3"

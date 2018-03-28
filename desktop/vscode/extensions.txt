@@ -1,5 +1,0 @@
-dbaeumer.vscode-eslint
-donjayamanne.python
-joshpeng.sublime-babel-vscode
-joshpeng.theme-onedark-sublime
-vscodevim.vim
