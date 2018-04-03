@@ -42,10 +42,10 @@
 
     // Emmet config
     "emmet.triggerExpansionOnTab": false,
-    "workbench.colorTheme": "Magoon",
+    "workbench.colorTheme": "Monokai",
     "window.zoomLevel": 0,
     "python.pythonPath": "/home/nary/work/env/bin/python",
     "window.menuBarVisibility": "toggle",
-    "editor.fontFamily": "Source Code Pro",
+    "editor.fontFamily": "Consolas, 'Courier New', monospace",
     "editor.fontSize": 15
 }

@@ -3,12 +3,22 @@
     {
         "key": "a",
         "command": "explorer.newFile",
-        "when": "explorerViewletVisible && filesExplorerFocus"
+        "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus"
     },
     {
         "key": "shift+a",
         "command": "explorer.newFolder",
-        "when": "explorerViewletVisible && filesExplorerFocus"
+        "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus"
+    },
+    {
+        "key": "m",
+        "command": "renameFile",
+        "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus"
+    },
+    {
+        "key": "r",
+        "command": "deleteFile",
+        "when": "explorerViewletVisible && filesExplorerFocus !inputFocus"
     },
     {
         "key": "tab",
@@ -34,16 +44,6 @@
         "key": "ctrl+h",
         "command": "workbench.action.focusNextGroup",
         "when": "!suggestWidgetVisible && !suggestionMakesTextEdit"
-    },
-    {
-        "key": "m",
-        "command": "renameFile",
-        "when": "explorerViewletVisible && filesExplorerFocus"
-    },
-    {
-        "key": "r",
-        "command": "deleteFile",
-        "when": "explorerViewletVisible && filesExplorerFocus"
     },
     {
         "key": "ctrl+e",
