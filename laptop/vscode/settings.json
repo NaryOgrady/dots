@@ -42,10 +42,25 @@
 
     // Emmet config
     "emmet.triggerExpansionOnTab": false,
-    "workbench.colorTheme": "Monokai",
-    "window.zoomLevel": 0,
+    "workbench.colorTheme": "Cobalt2",
+    "window.zoomLevel": 1,
     "python.pythonPath": "/home/nary/work/env/bin/python",
     "window.menuBarVisibility": "toggle",
-    "editor.fontFamily": "Consolas, 'Courier New', monospace",
-    "editor.fontSize": 15
+    "editor.fontFamily": "Fira Code, Consolas, 'Courier New', monospace",
+    "editor.fontSize": 15,
+    "python.linting.pylintEnabled": false,
+    "python.linting.flake8Enabled": true,
+    "cSpell.language": "en",
+    "git.confirmSync": false,
+    "git.autofetch": true,
+    "cSpell.userWords": [
+        "Rect",
+        "pyglet",
+        "rects"
+    ],
+    "indentRainbow.ignoreErrorLanguages": [
+        "plaintext"
+    ],
+    "editor.fontLigatures": true,
+    "workbench.activityBar.visible": true
 }

@@ -18,7 +18,7 @@
     {
         "key": "r",
         "command": "deleteFile",
-        "when": "explorerViewletVisible && filesExplorerFocus !inputFocus"
+        "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus"
     },
     {
         "key": "tab",
@@ -36,6 +36,11 @@
         "when": "editorTextFocus && suggestWidgetMultipleSuggestions && suggestWidgetVisible"
     },
     {
+        "key": "ctrl+k",
+        "command": "selectPreviousSuggestion",
+        "when": "editorTextFocus && suggestWidgetMultipleSuggestions && suggestWidgetVisible"
+    },
+    {
         "key": "ctrl+j",
         "command": "editor.action.joinLines",
         "when": "editorTextFocus && vim.mode != 'Insert' && !suggestWidgetVisible"
@@ -49,10 +54,6 @@
         "key": "ctrl+e",
         "command": "editor.emmet.action.expandAbbreviation",
         "when": "config.emmet.triggerExpansionOnTab && editorTextFocus && !config.emmet.useNewEmmet && !editorHasMultipleSelections && !editorHasSelection && !editorReadonly && !editorTabMovesFocus"
-    },
-    {
-        "key": "alt+\\",
-        "command": "workbench.view.explorer"
     },
     {
         "key": "ctrl+\\",
@@ -165,5 +166,10 @@
         "key": "ctrl+j",
         "command": "-extension.vim_ctrl+j",
         "when": "editorTextFocus && vim.active && vim.use<C-j> && !inDebugRepl && vim.mode != 'Insert'"
+    },
+    {
+        "key": "ctrl+w",
+        "command": "-workbench.action.closeWindow",
+        "when": "!editorIsOpen && !multipleEditorGroups"
     },
 ]
