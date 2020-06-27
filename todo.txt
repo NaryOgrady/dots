@@ -1,3 +1,4 @@
 
 -install a disk space manager tool
 -backup bash_profile
+-test
