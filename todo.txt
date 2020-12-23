@@ -3,4 +3,3 @@
 -backup bash_profile
 -improve system notifications
 -assing apps to workspaces
--change icons for workspaces
