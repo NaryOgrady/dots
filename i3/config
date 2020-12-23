@@ -30,11 +30,14 @@ font pango:Source Code Pro 9
 floating_modifier $mod
 
 # Gaps
-smart_gaps inverse_outer
+#smart_gaps inverse_outer
 gaps inner 10
+gaps top 35
+gaps horizontal 5
 
 #Borders
 default_border pixel 2
+new_window 1pixel
 
 # Colors
 client.background #2e3440
@@ -44,7 +47,7 @@ client.placeholder #5e81ac #2e3440 #eceff4 #8fbcbb #5e81ac
 client.urgent #d08770 #2e3440 #eceff4 #8fbcbb #5e81ac 
 
 # start a terminal
-bindsym $mod+Return exec urxvt
+bindsym $mod+Return exec --no-startup-id alacritty
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -193,12 +196,17 @@ exec --no-startup-id ~/.screenlayout/default.sh
 exec --no-startup-id nitrogen --restore
 exec --no-startup-id picom -CGb
 exec --no-startup-id dunst
-exec --no-startup-id ~/scripts/polybar.sh
+exec --no-startup-id redshift-gtk
+exec --no-startup-id ~/scripts/polybar/polybar.sh
 
 # Float windows
 for_window[instance="ncpamixer"] floating enable
+for_window[instance="Devtools"] floating enable
 
 # Assign clients to specific workspace
 assign [class="code-oss"] $ws1
 assign [class="discord"] $ws10
 for_window [class="Spotify"] move to workspace $ws9
+
+bindsym $mod+Shift+m move scratchpad
+bindsym $mod+m scratchpad show
