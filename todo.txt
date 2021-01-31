@@ -1,5 +1,14 @@
 
 -install a disk space manager tool
--backup bash_profile
 -improve system notifications
--assing apps to workspaces
+-change ncpamixer desktop to pulsemixer
+
+# Apps
+
+- pulsemixer: Audio controls,
+- ranger: file manager
+- polybar: status bar
+- i3: wm
+- nitrogen: desktop background
+- lxappereance: theme manager
+- fonts: some nerd fonts
