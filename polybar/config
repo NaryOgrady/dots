@@ -23,7 +23,7 @@ background-focus = #4c566a
 background-unfocus = #3b4252
 foreground = #eceff4
 foreground-alt = #777
-primary = #88c0d0
+primary = #08c297
 secondary = #b48ead
 blue = #5e81ac
 alert = #bf616a
@@ -31,11 +31,10 @@ alert = #bf616a
 
 [bar/bar1]
 monitor = DisplayPort-0
-offset-x = 15
-offset-y = 10
-width = 100%:-30
-height = 25
-radius = 10
+width = 100%
+height = 23
+
+wm-restack = i3
 
 line-size = 2
 line-color = ${colors.alert}
@@ -47,18 +46,19 @@ padding-left = 2
 padding-right = 2
 
 module-margin-left = 2
-module-margin-right = 1
+module-margin-right = 2
 
-font-0 = "Noto Sans Mono:pixelsize=9;0"
-font-1 = "Wuncon Siji:size=64:pixelsize=14;1"
+font-0 = "FiraCode Nerd Font:pixelsize=9;1"
+font-1 = "FiraCode Nerd Font:size=20;1"
 
-modules-left = xwindow
+modules-left = powermenu xwindow
 modules-center = i3
-modules-right = xkeyboard eth date pulseaudio powermenu
+modules-right = xkeyboard eth pulseaudio date
 
-tray-position = none
+tray-position = right
+tray-padding = 1
 
-override-redirect = true
+override-redirect = false
 
 scroll-up = i3wm-wsnext
 scroll-down = i3wm-wsprev
@@ -69,11 +69,10 @@ cursor-scroll = ns-resize
 
 [bar/bar2]
 monitor = DVI-D-0
-offset-x = 15
-offset-y = 10
-width = 100%:-30
+width = 100%
 height = 23
-radius = 10
+
+wm-restack = i3
 
 background = ${colors.background}
 foreground = ${colors.foreground}
@@ -85,17 +84,15 @@ padding-right = 2
 module-margin-left = 1
 module-margin-right = 2
 
-font-0 = "Noto Sans Mono:pixelsize=9;0"
-font-1 = "Wuncon Siji:size=64:pixelsize=15;1"
+font-0 = "FiraCode Nerd Font:pixelsize=9;1"
+font-1 = "FiraCode Nerd Font:pixelsize=12;1"
 
-modules-left = xwindow
+modules-left = powermenu xwindow
 modules-center = i3
 modules-right = cpu memory filesystem temperature
 
 tray-position = right
 tray-padding = 2
-
-override-redirect = true
 
 scroll-up = i3wm-wsnext
 scroll-down = i3wm-wsprev
@@ -108,10 +105,11 @@ cursor-scroll = ns-resize
 type = internal/xkeyboard
 blacklist-0 = num lock
 
-format-prefix = " "
+format-prefix = " "
 format-prefix-foreground = ${colors.blue}
 
 label-layout = %layout%
+label-active-font = 1
 
 label-indicator-padding = 2
 label-indicator-margin = 1
@@ -124,9 +122,8 @@ interval = 25
 
 mount-0 = /
 mount-1 = /home
-mount-2 = /var
 
-label-mounted = %{F#0a81f5}%mountpoint%%{F-}: %percentage_used%%
+label-mounted = %{F#5e81ac}%mountpoint%%{F-} %percentage_used%%
 label-unmounted = %mountpoint% not mounted
 label-unmounted-foreground = ${colors.foreground-alt}
 
@@ -142,7 +139,7 @@ wrapping-scroll = false
 ;ws-icon-2 = 3;
 ;ws-icon-3 = 4;
 ;ws-icon-4 = 5;
-ws-icon-default = 
+ws-icon-default = 
 
 
 ; Only show workspaces on the same output as the bar
@@ -159,7 +156,7 @@ label-focused-foreground = ${colors.primary}
 label-focused-padding = 1
 
 ; unfocused = Inactive workspace on any monitor
-label-unfocused = %icon%
+label-unfocused = ""
 label-unfocused-background = ${colors.background}
 label-unfocused-foreground = ${colors.foreground-alt}
 label-unfocused-padding = 1
@@ -214,7 +211,7 @@ bar-empty-foreground = ${colors.foreground-alt}
 [module/cpu]
 type = internal/cpu
 interval = 2
-format-prefix = " "
+format-prefix = "ﴮ "
 format-prefix-foreground = ${colors.blue}
 label = %percentage:2%%
 
@@ -222,7 +219,7 @@ label = %percentage:2%%
 [module/memory]
 type = internal/memory
 interval = 2
-format-prefix = " "
+format-prefix = " "
 format-prefix-foreground = ${colors.blue}
 label = %percentage_used%%
 
@@ -254,11 +251,11 @@ type = internal/network
 interface = enp4s0
 interval = 3.0
 
-format-connected-prefix = " "
-format-connected-prefix-foreground = ${colors.blue}
-label-connected = %local_ip%
+label-connected-foreground = ${colors.blue}
+label-connected = "ﯱ"
 
-format-disconnected =
+label-disconnected = ""
+label-disconnected--foreground = ${colors.alert}
 ;format-disconnected = <label-disconnected>
 ;format-disconnected-underline = ${self.format-connected-underline}
 ;label-disconnected = %ifname% disconnected
@@ -269,14 +266,14 @@ format-disconnected =
 type = internal/date
 interval = 5
 
-date = "%a %d %B %Y"
+date = "%a %d %b"
 
 time = %H:%M
 
-format-prefix = " "
+format-prefix = " "
+format-prefix-foreground = ${colors.blue}
 format-background = ${colors.background}
 format-foreground = ${colors.foreground}
-format-prefix-foreground = ${colors.foreground}
 
 label = "%date% - %time% "
 
@@ -285,10 +282,10 @@ label = "%date% - %time% "
 type = internal/pulseaudio
 
 format-volume = <label-volume>
-label-volume = %{F#5e81ac}%{F-} %percentage%%
+label-volume = %{F#5e81ac}蓼%{F-} %percentage%%
 label-volume-foreground = ${colors.foreground}
 
-label-muted = 🔇 muted
+label-muted = "遼"
 label-muted-foreground = #666
 
 
@@ -318,9 +315,10 @@ expand-right = true
 
 format-spacing = 1
 
-label-open = 
-label-open-foreground = ${colors.secondary}
-label-close =  cancel
+label-open = " "
+label-open-font = 3
+label-open-foreground = ${colors.blue}
+label-close = " "
 label-close-foreground = ${colors.secondary}
 label-separator = |
 label-separator-foreground = ${colors.foreground-alt}
@@ -341,9 +339,9 @@ menu-2-1 = cancel
 menu-2-1-exec = menu-open-0
 
 [module/xwindow]
-type = custom/script
-exec = ~/scripts/polybar/polybar-i3-windows/module.py
-tail = true
+type = internal/xwindow
+
+label-maxlen=25
 
 [settings]
 screenchange-reload = true
