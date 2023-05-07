@@ -200,7 +200,10 @@
 )
 
 (defwidget player []
-  (literal :content "${music != '' ? '(box :class "player_module" :orientation "h" :space-evenly false (button :class "player_icon" :onclick "playerctl previous" "󰒮") (button :onclick "playerctl play-pause" (label :class "music ${is_playing == 'Playing' ? 'playing' : ''}" :text  "${music}")) (button :class "player_icon" :onclick "playerctl next" "󰒭"))' : 'no player'}")
+  (revealer :transition "slidedown"
+            :reveal "${music != ''}"
+    (box :class "player_module" :orientation "h" :space-evenly false (button :class "player_icon" :onclick "playerctl previous" "󰒮") (button :onclick "playerctl play-pause" (label :class "music ${is_playing == 'Playing' ? 'playing' : ''}" :text  "${music}")) (button :class "player_icon" :onclick "playerctl next" "󰒭"))
+  ) 
 )
 
 
