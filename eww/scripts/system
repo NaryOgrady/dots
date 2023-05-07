@@ -1,7 +1,4 @@
 #!/bin/bash
-BAR1_WS=(2 4 6 8)
-BAR2_WS=(1 3 5 7)
-
 function volume() {
     OUTPUT=$(pactl list sinks | grep 'Volume:' | head -n 1 | awk '{print $5}' | sed 's/%//g')
     echo "$OUTPUT"
@@ -38,7 +35,7 @@ function workspaces() {
     output="${output%, }"
     echo "[$output]"
     socat -u UNIX-CONNECT:/tmp/hypr/"$HYPRLAND_INSTANCE_SIGNATURE"/.socket2.sock - | while read -r; do
-        workspaces $1
+        workspaces
     done
 }
 
@@ -48,6 +45,12 @@ function cpu() {
 
 function disk() {
     echo "$(df -h $1 | awk 'NR==2{print $(NF-1)}')"
+}
+
+function music() {
+    playerctl --follow metadata  | while read -r; do
+        echo "$(playerctl metadata --format '{{ artist }} - {{ title }}' | cut -c -45)"
+    done
 }
 
 
@@ -61,6 +64,8 @@ elif [ "$1" == "cpu" ]; then
     cpu
 elif [ "$1" == "disk" ]; then
     disk $2
+elif [ "$1" == "music" ]; then
+    music
 else
     echo "Invalid parameter"
 fi

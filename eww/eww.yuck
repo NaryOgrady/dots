@@ -15,7 +15,7 @@
 (defpoll root :interval "3s" :initial 0 "./scripts/system disk /")
 (defpoll home :interval "3s" :initial 0 "./scripts/system disk /home")
 
-(deflisten music :initial "" "playerctl --follow metadata --format '{{ artist }} - {{ title }}' || true")
+(deflisten music :initial "" "./scripts/system music")
 (defpoll is_playing :initial "Paused" :interval "1s" "playerctl status")
 
 (defwidget bar_1 []
@@ -202,7 +202,12 @@
 (defwidget player []
   (revealer :transition "slidedown"
             :reveal "${music != ''}"
-    (box :class "player_module" :orientation "h" :space-evenly false (button :class "player_icon" :onclick "playerctl previous" "󰒮") (button :onclick "playerctl play-pause" (label :class "music ${is_playing == 'Playing' ? 'playing' : ''}" :text  "${music}")) (button :class "player_icon" :onclick "playerctl next" "󰒭"))
+    (box :class "player_module" :orientation "h" :space-evenly false 
+      (button :class "player_icon" :onclick "playerctl previous" "󰒮")
+      (button :onclick "playerctl play-pause" 
+        (label :class "music ${is_playing == 'Playing' ? 'playing' : ''}" :text  "${music}"))
+        (button :class "player_icon" :onclick "playerctl next" "󰒭")
+      )
   ) 
 )
 
