@@ -11,4 +11,6 @@
 - i3: wm
 - nitrogen: desktop background
 - lxappereance: theme manager
-- fonts: some nerd fonts
+- fonts: ttf-dejavu nerd-fonts-fira-code
+- font-manger: fontmatrix
+- diplay configuration: arandr

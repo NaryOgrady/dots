@@ -135,9 +135,9 @@ set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10"
 
-set $monitor1 "DP-4"
-set $monitor2 "DP-0"
-
+set $monitor1 "DP-2"
+set $monitor2 "DP-4"
+set $monitor3 "HDMI-0"
 # switch to workspace
 bindsym $mod+1 workspace number $ws1
 bindsym $mod+2 workspace number $ws2
@@ -171,8 +171,13 @@ workspace $ws5 output $monitor1
 workspace $ws6 output $monitor2
 workspace $ws7 output $monitor1
 workspace $ws8 output $monitor2
-workspace $ws9 output $monitor1
+workspace $ws9 output $monitor3
 workspace $ws10 output $monitor2
+
+# assign windows to workspaces
+assign [class="code-oss"] 3
+assign [class="firefox"] 2
+assign [class="Chromium"] 2
 
 # reload the configuration file
 bindsym $mod+Shift+c reload

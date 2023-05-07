@@ -1,0 +1,234 @@
+(defvar time_rev false)
+(defpoll clock_time :interval "5m" "date +%I:%M")
+(defpoll clock_date :interval "10h" "date '+%d/%m'")
+
+(defvar vol_rev false)
+(defpoll sink :interval "1m" "pactl list sinks short | awk '{print $1}'")
+(defpoll volume_percent :interval "3s" :initial 0 "./scripts/system volume")
+(defpoll vol_mute :interval "3s" :initial 'no'  "pactl list sinks | grep Mute | awk '{print $2}'")
+
+(deflisten ws :initial "[[], [], [], [], [], [], [], [], [], [], []]" "./scripts/system workspaces")
+
+(defpoll ip_addr :interval "3s" :initial 0 "./scripts/system network")
+
+(defpoll cpu :interval "3s" :initial 0 "./scripts/system cpu")
+(defpoll root :interval "3s" :initial 0 "./scripts/system disk /")
+(defpoll home :interval "3s" :initial 0 "./scripts/system disk /home")
+
+(deflisten music :initial "" "playerctl --follow metadata --format '{{ artist }} - {{ title }}' || true")
+(defpoll is_playing :initial "Paused" :interval "1s" "playerctl status")
+
+(defwidget bar_1 []
+    (box :class "bar"
+        :orientation "h"
+    (left1)
+    (center1)     
+    (right1)
+))
+
+(defwidget bar_2 []
+    (box :class "bar"
+        :orientation "h"
+    (left2)
+    (center2)     
+    (right2)
+))
+
+
+(defwidget center1 []
+	(box :orientation "h" 
+		 :space-evenly false  
+         :halign "center"
+		 :class "center_modules"
+""))
+
+(defwidget center2 []
+	(box :orientation "h" 
+		 :space-evenly false  
+         :halign "center"
+		 :class "center_modules"
+(player)))
+
+
+(defwidget right2 []
+	(box :orientation "h" 
+		 :space-evenly false  
+         :halign "end"
+		 :class "right_modules"
+(network)
+(volume)
+(clock)))
+
+
+(defwidget right1 []
+	(box :orientation "h" 
+		 :space-evenly false  
+         :halign "end"
+		 :class "right_modules"
+(monitor)))
+
+
+(defwidget left1 []
+	(box :orientation "h" 
+		 :space-evenly false  
+         :halign "start"
+		 :class "left_modules"
+(workspaces1)))
+
+
+(defwidget left2 []
+	(box :orientation "h" 
+		 :space-evenly false  
+         :halign "start"
+		 :class "left_modules"
+(workspaces2)))
+
+
+(defwidget clock []
+  (eventbox :onhover "eww update time_rev=true"
+			  :onhoverlost "eww update time_rev=false"
+    (box :class "clock_module" :space-evenly "false" :orientation "h" :spacing "3" 
+      (label :text "${clock_time}${time_rev ? " " : ""}")
+	  (revealer :transition "slideleft"
+			      :reveal time_rev
+			      :duration "350ms"
+      (label :text "| ${clock_date}")
+  ))))
+
+  
+  (defwidget volume []
+  (eventbox :onhover "eww update vol_rev=true"
+			  :onhoverlost "eww update vol_rev=false"
+  (box :class "vol_module" :space-evenly "false" :orientation "h" :spacing "3" 
+  (button :onclick "sh -c 'pactl set-sink-mute ${sink} toggle; eww update vol_mute=${vol_mute == 'yes' ? 'no' : 'yes'}'"
+    (box
+	    (label  :class "vol_icon" :text "${vol_mute == 'yes' ? '󰖁' : '󰕾'}")
+    )
+  )
+  (revealer :transition "slideleft"
+            :reveal vol_rev
+            :duration "350ms"
+    (box :orientation "h" :space-evenly false
+	    (scale    :class "volbar"
+			      :value volume_percent
+                  :active true
+			      :orientation "h"
+			      :tooltip "${volume_percent}%"
+			      :max 101
+			      :min 0
+            :onchange "sh -c 'pactl set-sink-mute ${sink} false; pactl set-sink-volume ${sink} {}%; eww update volume_percent={}'"
+      )
+	    (label  :class "vol_text" :text "${volume_percent}%")
+    )
+  ))))
+
+
+(defwidget network []
+  (box :class "network_module" :orientation "h"
+    (label :text "󰈀" 
+            :tooltip ip_addr
+            :class "${ip_addr != '' ? '' : 'disable'}")
+  )
+)
+
+
+(defwidget workspaces1 []
+  (box :class "workspaces_module" :orientation "h"
+    (button :onclick "hyprctl dispatch workspace ${ws[1][0]}" 
+            :class 'button ${ws[1][1]}'
+      (label :text '${ ws[1][1] == 'active' ? '' : ws[1][1] == 'inactive' ? '' : '' }')
+    )
+    (button :onclick "hyprctl dispatch workspace ${ws[3][0]}" 
+            :class 'button ${ws[3][1]}'
+      (label :text '${ ws[3][1] == 'active' ? '' : ws[3][1] == 'inactive' ? '' : '' }')
+    )
+    (button :onclick "hyprctl dispatch workspace ${ws[5][0]}" 
+            :class 'button ${ws[5][1]}'
+      (label :text '${ ws[5][1] == 'active' ? '' : ws[5][1] == 'inactive' ? '' : '' }')
+    )
+    (button :onclick "hyprctl dispatch workspace ${ws[7][0]}" 
+            :class 'button ${ws[7][1]}'
+      (label :text '${ ws[7][1] == 'active' ? '' : ws[7][1] == 'inactive' ? '' : '' }')
+    )
+  )
+)
+
+
+(defwidget workspaces2 []
+  (box :class "workspaces_module" :orientation "h"
+    (button :onclick "hyprctl dispatch workspace ${ws[2][0]}" 
+            :class 'button ${ws[2][1]}'
+      (label :text '${ ws[2][1] == 'active' ? '' : ws[2][1] == 'inactive' ? '' : '' }')
+    )
+    (button :onclick "hyprctl dispatch workspace ${ws[4][0]}" 
+            :class 'button ${ws[4][1]}'
+      (label :text '${ ws[4][1] == 'active' ? '' : ws[4][1] == 'inactive' ? '' : '' }')
+    )
+    (button :onclick "hyprctl dispatch workspace ${ws[6][0]}" 
+            :class 'button ${ws[6][1]}'
+      (label :text '${ ws[6][1] == 'active' ? '' : ws[6][1] == 'inactive' ? '' : '' }')
+    )
+    (button :onclick "hyprctl dispatch workspace ${ws[8][0]}" 
+            :class 'button ${ws[8][1]}'
+      (label :text '${ ws[8][1] == 'active' ? '' : ws[8][1] == 'inactive' ? '' : '' }')
+    )
+  )
+)
+
+
+(defwidget monitor []
+  (box :class "monitor_module" :orientation "h" :space-evenly false
+    (box :orientation "h"
+      (label :class "ram_icon" :text "󰍛")
+      (label :text "${round((EWW_RAM.used_mem / EWW_RAM.total_mem) * 100, 0)}%")
+    )
+    (box :orientation "h"
+      (label :class "ram_icon" :text "")
+      (label :text "${round(cpu, 0)}%")
+    )
+    (box :class "disk_monitor" :orientation "h" :space-evenly false
+      (label :class "disk_icon" :text "󱛟")
+      (label :text "/")
+      (label :class "value" :text "${root}")
+    )
+    (box :class "disk_monitor" :orientation "h" :space-evenly false
+      (label :class "disk_icon" :text "󱛟")
+      (label :text "/home")
+      (label :class "value" :text "${home}")
+    )
+  )
+)
+
+(defwidget player []
+  (literal :content "${music != '' ? '(box :class "player_module" :orientation "h" :space-evenly false (button :class "player_icon" :onclick "playerctl previous" "󰒮") (button :onclick "playerctl play-pause" (label :class "music ${is_playing == 'Playing' ? 'playing' : ''}" :text  "${music}")) (button :class "player_icon" :onclick "playerctl next" "󰒭"))' : 'no player'}")
+)
+
+
+(defwindow bar1
+    :monitor 0
+    :geometry (geometry :x "0%"
+                        :y "0%"
+                        :width "100%"
+                        :height "20px"
+                        :anchor "top center")
+    :stacking "fg"
+    :windowtype "dock"
+    :wm-ignore false
+    :exclusive true
+    :focusable false
+(bar_1))
+
+
+(defwindow bar2
+    :monitor 1
+    :geometry (geometry :x "0%"
+                        :y "0%"
+                        :width "100%"
+                        :height "20px"
+                        :anchor "top center")
+    :stacking "fg"
+    :windowtype "dock"
+    :wm-ignore false
+    :exclusive true
+    :focusable false
+(bar_2))
