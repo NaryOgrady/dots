@@ -2,5 +2,5 @@
 #!/bin/bash
 
 killall eww
-eww open bar1
 eww open bar2
+eww open bar1

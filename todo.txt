@@ -7,10 +7,11 @@
 
 - pulsemixer: Audio controls,
 - ranger: file manager
-- polybar: status bar
-- i3: wm
+- eww: status bar
+- wayland: wm
 - nitrogen: desktop background
 - lxappereance: theme manager
 - fonts: ttf-dejavu nerd-fonts-fira-code
 - font-manger: fontmatrix
 - diplay configuration: arandr
+- grimshot screenshots

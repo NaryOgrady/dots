@@ -34,9 +34,6 @@ function workspaces() {
     printf -v output "%s, " "${output_array[@]}"
     output="${output%, }"
     echo "[$output]"
-    socat -u UNIX-CONNECT:/tmp/hypr/"$HYPRLAND_INSTANCE_SIGNATURE"/.socket2.sock - | while read -r; do
-        workspaces
-    done
 }
 
 function cpu() {
@@ -59,7 +56,9 @@ if [ "$1" == "volume" ]; then
 elif [ "$1" == "network" ]; then
     network
 elif [ "$1" == "workspaces" ]; then
-    workspaces
+    socat -u UNIX-CONNECT:/tmp/hypr/"$HYPRLAND_INSTANCE_SIGNATURE"/.socket2.sock - | while read -r; do
+        workspaces
+    done
 elif [ "$1" == "cpu" ]; then
     cpu
 elif [ "$1" == "disk" ]; then

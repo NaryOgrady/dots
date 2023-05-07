@@ -84,7 +84,6 @@ scale trough {
         padding: 0;
         border: 0;
         color: $text;
-        transition: color 0.3s ease-in-out;
 
         &.active {
             color: #5e81ac;
