@@ -17,7 +17,14 @@ function move {
         exit
     fi
 
+    grouped_windows=$(hyprctl clients -j | jq '.[] | .grouped | .[]' | wc -l)
     hyprctl dispatch moveintogroup $1
+    new_grouped_windows=$(hyprctl clients -j | jq '.[] | .grouped | .[]' | wc -l)
+    echo $grouped_windows
+    echo $new_grouped_windows
+    if [ $grouped_windows != $new_grouped_windows ]; then
+        exit
+    fi
     hyprctl dispatch movewindow $1
 }
 

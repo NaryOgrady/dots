@@ -12,6 +12,7 @@
 (defpoll ip_addr :interval "3s" :initial 0 "./scripts/system network")
 
 (defpoll cpu :interval "3s" :initial 0 "./scripts/system cpu")
+(defpoll gpu :interval "3s" :initial 0 "./scripts/system gpu")
 (defpoll root :interval "3s" :initial 0 "./scripts/system disk /")
 (defpoll home :interval "3s" :initial 0 "./scripts/system disk /home")
 
@@ -185,6 +186,10 @@
     (box :orientation "h"
       (label :class "ram_icon" :text "")
       (label :text "${round(cpu, 0)}%")
+    )
+    (box :orientation "h" :space-evenly false
+      (label :class "gpu_icon" :text "󰒇")
+      (label :text "${gpu}")
     )
     (box :class "disk_monitor" :orientation "h" :space-evenly false
       (label :class "disk_icon" :text "󱛟")

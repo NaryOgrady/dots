@@ -40,6 +40,10 @@ function cpu() {
     echo "$(awk '/^cpu / {print ($2+$4)*100/($2+$4+$5)}' /proc/stat)"
 }
 
+function gpu() {
+    echo $(nvidia-smi --query-gpu=memory.used,memory.total --format=csv,noheader | awk -F"," '{ printf("%.0f%\n", $1/$2*100) }')
+}
+
 function disk() {
     echo "$(df -h $1 | awk 'NR==2{print $(NF-1)}')"
 }
@@ -61,6 +65,8 @@ elif [ "$1" == "workspaces" ]; then
     done
 elif [ "$1" == "cpu" ]; then
     cpu
+elif [ "$1" == "gpu" ]; then
+    gpu
 elif [ "$1" == "disk" ]; then
     disk $2
 elif [ "$1" == "music" ]; then
