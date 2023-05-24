@@ -1,8 +1,8 @@
 [Desktop Entry]
-Name=Audio Controls
-GenericName=Sound Settings
-Icon=Sound
-Exec=/home/nary/scripts/app_launcher.sh audio
+Name=Ranger
+GenericName=File Manager
+Icon=nemo
+Exec=/home/nary/scripts/app_launcher.sh ranger
 Terminal=false
 Type=Application
 Categories=Settings;HardwareSettings;

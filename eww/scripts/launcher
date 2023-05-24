@@ -1,0 +1,9 @@
+#!/bin/bash
+
+
+active_monitor=$(hyprctl activeworkspace -j | jq -r '.monitor')
+monitor_id=$(hyprctl monitors -j | jq '.[] | select(.name == '\"$active_monitor\"') | .id')
+
+hyprctl dispatch submap power
+eww -c ~/.config/eww/$1-menu open $1-closer --screen $(($monitor_id-1))
+eww -c ~/.config/eww/$1-menu open $1-menu --screen $(($monitor_id-1))

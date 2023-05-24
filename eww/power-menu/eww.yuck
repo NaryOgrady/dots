@@ -1,0 +1,41 @@
+(defwidget closer [window]
+  (eventbox :onclick "sh -c 'eww -c ~/.config/eww/power-menu close ${window}-closer; eww -c ~/.config/eww/power-menu close ${window}-menu; hyprctl dispatch submap reset'"))
+ 
+(defwindow power-closer
+    :geometry (geometry :width "100%" :height "100%")
+    :stacking "fg"
+    :windowtype "overlay"
+    :wm-ignore true
+    :focusable false
+  
+  (closer :window "power"))
+
+
+
+(defwidget power []
+  (box :class "container" :orientation "h"
+        :spacing 3 :space-evenly false
+        :hexpand true :halign "center"
+    (button :width "50" :class "power-off"
+            :onclick "poweroff"
+      ""
+    )
+    (button :width "50" :class "reboot"
+            :onclick "reboot"
+      ""
+    )
+    (button :width "50" :class "logout"
+            :onclick "hyprctl dispatch exit"
+      ""
+    )
+  )
+)
+
+
+(defwindow power-menu
+    :geometry (geometry :width "400px" :height "180px" :anchor "center")
+    :stacking "fg"
+    :windowtype "dialog"
+    :wm-ignore false
+  (power)
+)

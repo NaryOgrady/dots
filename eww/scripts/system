@@ -1,4 +1,5 @@
 #!/bin/bash
+
 function volume() {
     OUTPUT=$(pactl list sinks | grep 'Volume:' | head -n 1 | awk '{print $5}' | sed 's/%//g')
     echo "$OUTPUT"
@@ -6,7 +7,7 @@ function volume() {
 
 function network() {
     OUTPUT=$(ip addr show | grep enp6s0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}' | head -n 1)
-    echo "$OUTPUT"
+    echo "$OUTPUT" 
 }
 
 function workspaces() {
@@ -50,7 +51,7 @@ function disk() {
 
 function music() {
     playerctl --follow metadata  | while read -r; do
-        echo "$(playerctl metadata --format '{{ artist }} - {{ title }}' | cut -c -45)"
+        echo "$(playerctl --player spotify metadata --format '{{ artist }} - {{ title }}' | cut -c -45)"
     done
 }
 

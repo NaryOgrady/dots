@@ -1,8 +1,8 @@
 [Desktop Entry]
-Name=Audio Controls
-GenericName=Sound Settings
-Icon=Sound
-Exec=/home/nary/scripts/app_launcher.sh audio
+Name=System Config
+GenericName=Open Config
+Icon=system
+Exec=/home/nary/scripts/app_launcher.sh config
 Terminal=false
 Type=Application
 Categories=Settings;HardwareSettings;

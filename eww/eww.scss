@@ -2,27 +2,22 @@ $text: #B5BCC9;
 $nord0: #2e3440;
 
 * {
-    all: unset;
-    font-family: 'FiraCode Nerd Font Mono';
+    font-family: 'FiraCode Nerd Font Mono', ;
     font-size: 13px;
     color: $text
 }
 
-.example {
-    margin: 0px;
-    padding: 0px;
-}
-
-box {
-    margin: 0;
-    padding: 0;
-    outline: none;
-    border: none;
+button {
+    all: unset;
 }
 
 .bar {
     background-color: $nord0;
     padding: 0 20px;
+}
+
+.icon {
+    font-family: "Font Awesome 5 Free";
 }
 
 scale:hover {
@@ -36,7 +31,6 @@ scale trough {
     background-color: #22242b;
     min-height: 3px;
     min-width: 77px;
-    margin: 0px 10px 0px 0px;
     transition: border 0.4s ease-in-out;
 
     highlight {
@@ -61,7 +55,7 @@ scale trough {
         .vol_icon {
             padding: 0;
             margin: 0;
-            font-size: 22px;
+            font-size: 20px;
         }
     }
 }
@@ -71,7 +65,7 @@ scale trough {
 
     label {
         all: unset;
-        font-size: 20px;
+        font-size: 22px;
     
         &.disable {
             color: #bf616a;
@@ -104,15 +98,21 @@ scale trough {
         margin-right: 12px;
     }
     .ram_icon {
-        margin-right: 2px;
+        margin-right: 8px;
         color: #a3be8c;
-        font-size: 20px;
+        font-size: 18px;
+    }
+
+    .cpu_icon {
+        margin-right: 8px;
+        color: #a3be8c;
+        font-size: 16px;
     }
 
     .gpu_icon {
-        margin-right: 2px;
+        margin-right: 8px;
         color: #a3be8c;
-        font-size: 20px;
+        font-size: 18px;
     }
 
     .disk_monitor {
@@ -122,7 +122,7 @@ scale trough {
         }
 
         .disk_icon {
-            font-size: 20px;
+            font-size: 18px;
         }
 
         .value {
@@ -149,13 +149,13 @@ scale trough {
     }
 }
 
+.playing {
+    animation: color-animation 5s linear infinite;
+}
+
 .player_module {
     .music {
         margin: 0 13px;
-
-        &.playing {
-            animation: color-animation 5s linear infinite;
-        }
     }
 
     .player_icon {
@@ -172,5 +172,15 @@ scale trough {
             transition: color 0.4s ease-in-out;
         }
 
+    }
+}
+
+.start_module {
+    margin-right: 20px;
+
+    label {
+        font-family: 'FiraCode Nerd Font Mono', ;
+        color: #5e81ac;
+        font-size: 26px;
     }
 }

@@ -1,0 +1,43 @@
+$polar1: #2e3440;
+$polar2: #3b4252;
+$text: #B5BCC9;
+
+button {
+    all: unset;
+}
+
+.power-closer {
+    background-color: $polar1;
+    opacity: 0.6;
+}
+
+.power-menu {
+    color: $text;
+    border-radius: 6px;
+    background-color: $polar2;
+
+    .container {
+        padding: 50px 10px;
+    }
+
+    button {
+        border-radius: 4px;
+        background-color: $polar1;
+        margin: 0 20px;
+        min-width: 80px;
+
+        label {
+            font-size: 25px;
+        }
+
+        &.power-off {
+            color: #bf616a;
+        }
+        &.reboot {
+            color: #d08770;
+        }
+        &.logout {
+            color: #ebcb8b;
+        }
+    }
+}

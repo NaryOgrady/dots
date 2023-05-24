@@ -17,7 +17,7 @@
 (defpoll home :interval "3s" :initial 0 "./scripts/system disk /home")
 
 (deflisten music :initial "" "./scripts/system music")
-(defpoll is_playing :initial "Paused" :interval "1s" "playerctl status")
+(defpoll is_playing :initial "Paused" :interval "1s" "playerctl -p spotify status")
 
 (defwidget bar_1 []
     (box :class "bar"
@@ -82,6 +82,7 @@
 		 :space-evenly false  
          :halign "start"
 		 :class "left_modules"
+(start)
 (workspaces2)))
 
 
@@ -89,7 +90,7 @@
   (eventbox :onhover "eww update time_rev=true"
 			  :onhoverlost "eww update time_rev=false"
     (box :class "clock_module" :space-evenly "false" :orientation "h" :spacing "3" 
-      (label :text "${clock_time}${time_rev ? " " : ""}")
+      (label :text "${clock_time}")
 	  (revealer :transition "slideleft"
 			      :reveal time_rev
 			      :duration "350ms"
@@ -103,7 +104,7 @@
   (box :class "vol_module" :space-evenly "false" :orientation "h" :spacing "3" 
   (button :onclick "sh -c 'pactl set-sink-mute ${sink} toggle; eww update vol_mute=${vol_mute == 'yes' ? 'no' : 'yes'}'"
     (box
-	    (label  :class "vol_icon" :text "${vol_mute == 'yes' ? '󰖁' : '󰕾'}")
+	    (label  :class "icon vol_icon" :text "${vol_mute == 'yes' ? '󰖁' : '󰕾'}")
     )
   )
   (revealer :transition "slideleft"
@@ -119,7 +120,6 @@
 			      :min 0
             :onchange "sh -c 'pactl set-sink-mute ${sink} false; pactl set-sink-volume ${sink} {}%; eww update volume_percent={}'"
       )
-	    (label  :class "vol_text" :text "${volume_percent}%")
     )
   ))))
 
@@ -128,7 +128,7 @@
   (box :class "network_module" :orientation "h"
     (label :text "󰈀" 
             :tooltip ip_addr
-            :class "${ip_addr != '' ? '' : 'disable'}")
+            :class "icon ${ip_addr != '' ? '' : 'disable'}")
   )
 )
 
@@ -150,6 +150,10 @@
     (button :onclick "hyprctl dispatch workspace ${ws[7][0]}" 
             :class 'button ${ws[7][1]}'
       (label :text '${ ws[7][1] == 'active' ? '' : ws[7][1] == 'inactive' ? '' : '' }')
+    )
+    (button :onclick "hyprctl dispatch workspace ${ws[9][0]}" 
+            :class 'button ${ws[9][1]}'
+      (label :text '${ ws[9][1] == 'active' ? '' : ws[9][1] == 'inactive' ? '' : '' }')
     )
   )
 )
@@ -173,31 +177,35 @@
             :class 'button ${ws[8][1]}'
       (label :text '${ ws[8][1] == 'active' ? '' : ws[8][1] == 'inactive' ? '' : '' }')
     )
+    (button :onclick "hyprctl dispatch workspace ${ws[10][0]}" 
+            :class 'button ${ws[8][1]}'
+      (label :text '${ ws[10][1] == 'active' ? '' : ws[10][1] == 'inactive' ? '' : '' }')
+    )
   )
 )
 
 
 (defwidget monitor []
   (box :class "monitor_module" :orientation "h" :space-evenly false
-    (box :orientation "h"
-      (label :class "ram_icon" :text "󰍛")
+    (box :orientation "h" :space-evenly false
+      (label :class "icon ram_icon" :text "󰍛")
       (label :text "${round((EWW_RAM.used_mem / EWW_RAM.total_mem) * 100, 0)}%")
     )
-    (box :orientation "h"
-      (label :class "ram_icon" :text "")
+    (box :orientation "h" :space-evenly false
+      (label :class "icon cpu_icon" :text "")
       (label :text "${round(cpu, 0)}%")
     )
     (box :orientation "h" :space-evenly false
-      (label :class "gpu_icon" :text "󰒇")
+      (label :class "icon gpu_icon" :text "󰒇")
       (label :text "${gpu}")
     )
     (box :class "disk_monitor" :orientation "h" :space-evenly false
-      (label :class "disk_icon" :text "󱛟")
+      (label :class "icon disk_icon" :text "󱛟")
       (label :text "/")
       (label :class "value" :text "${root}")
     )
     (box :class "disk_monitor" :orientation "h" :space-evenly false
-      (label :class "disk_icon" :text "󱛟")
+      (label :class "icon disk_icon" :text "󱛟")
       (label :text "/home")
       (label :class "value" :text "${home}")
     )
@@ -208,12 +216,21 @@
   (revealer :transition "slidedown"
             :reveal "${music != ''}"
     (box :class "player_module" :orientation "h" :space-evenly false 
-      (button :class "player_icon" :onclick "playerctl previous" "󰒮")
-      (button :onclick "playerctl play-pause" 
+      (button :class "icon player_icon" :onclick "playerctl -p spotify previous" "󰒮")
+      (button :onclick "playerctl -p spotify play-pause" 
         (label :class "music ${is_playing == 'Playing' ? 'playing' : ''}" :text  "${music}"))
-        (button :class "player_icon" :onclick "playerctl next" "󰒭")
-      )
+      (button :class "icon player_icon" :onclick "playerctl -p spotify next" "󰒭")
+    )
   ) 
+)
+
+
+(defwidget start []
+  (box :class "start_module" :orientation "h"
+    (button :onclick "~/.config/eww/scripts/launcher power"
+      (label :class "icon" :text "󰣇󱌧")
+    )
+  )
 )
 
 
@@ -222,7 +239,6 @@
     :geometry (geometry :x "0%"
                         :y "0%"
                         :width "100%"
-                        :height "20px"
                         :anchor "top center")
     :stacking "fg"
     :windowtype "dock"
@@ -237,7 +253,6 @@
     :geometry (geometry :x "0%"
                         :y "0%"
                         :width "100%"
-                        :height "20px"
                         :anchor "top center")
     :stacking "fg"
     :windowtype "dock"
