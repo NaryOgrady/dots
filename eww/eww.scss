@@ -3,8 +3,8 @@ $nord0: #2e3440;
 
 * {
     font-family: 'FiraCode Nerd Font Mono', ;
-    font-size: 13px;
-    color: $text
+    font-size: 12px;
+    color: $text;
 }
 
 button {
@@ -27,7 +27,6 @@ scale:hover {
 }
 
 scale trough {
-    all: unset;
     background-color: #22242b;
     min-height: 3px;
     min-width: 77px;
@@ -47,6 +46,7 @@ scale trough {
 }
 
 .vol_module {
+    margin: -10px 0;
     margin-right: 12px;
 
     button {
@@ -55,17 +55,17 @@ scale trough {
         .vol_icon {
             padding: 0;
             margin: 0;
-            font-size: 20px;
+            font-size: 16px;
         }
     }
 }
 
 .network_module {
-    margin-right: 12px;
+    margin-right: 18px;
 
     label {
         all: unset;
-        font-size: 22px;
+        font-size: 18px;
     
         &.disable {
             color: #bf616a;
@@ -87,7 +87,7 @@ scale trough {
         label {
             color: #d8dee9;
             all: unset;
-            font-size: 20px;
+            font-size: 18px;
             margin-right: 10px;
         }
     }
@@ -168,7 +168,7 @@ scale trough {
 
         label {
             color: $text;
-            font-size: 18px;
+            font-size: 12px;
             transition: color 0.4s ease-in-out;
         }
 
@@ -181,6 +181,6 @@ scale trough {
     label {
         font-family: 'FiraCode Nerd Font Mono', ;
         color: #5e81ac;
-        font-size: 26px;
+        font-size: 20px;
     }
 }
