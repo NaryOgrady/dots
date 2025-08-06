@@ -42,7 +42,7 @@
 
     // Emmet config
     "emmet.triggerExpansionOnTab": false,
-    "workbench.colorTheme": "Cobalt2",
+    "workbench.colorTheme": "Nord Deep",
     "window.zoomLevel": 1,
     "python.pythonPath": "/home/nary/work/env/bin/python",
     "window.menuBarVisibility": "toggle",
@@ -62,5 +62,8 @@
         "plaintext"
     ],
     "editor.fontLigatures": true,
-    "workbench.activityBar.visible": true
+    "editor.padding.top": 400,
+    "editor.padding.bottom": 400,
+    "editor.minimap.renderCharacters": false,
+    "editor.minimap.enabled": false
 }

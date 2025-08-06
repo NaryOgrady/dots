@@ -1,12 +1,12 @@
 #!/bin/bash
 
 function volume() {
-    OUTPUT=$(pactl list sinks | grep 'Volume:' | head -n 1 | awk '{print $5}' | sed 's/%//g')
+    OUTPUT=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print int($2 * 100)}')
     echo "$OUTPUT"
 }
 
 function network() {
-    OUTPUT=$(ip addr show | grep enp6s0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}' | head -n 1)
+    OUTPUT=$(ip addr show | grep eno1 | grep -oP '(?<=inet\s)\d+(\.\d+){3}' | head -n 1)
     echo "$OUTPUT" 
 }
 
@@ -38,7 +38,7 @@ function workspaces() {
 }
 
 function cpu() {
-    echo "$(awk '/^cpu / {print ($2+$4)*100/($2+$4+$5)}' /proc/stat)"
+    echo "$(awk -v OFMT=\"%.2f\" '{idle=$5; total=$2+$3+$4+$5+$6+$7+$8; print 100 * (1 - idle/total)}' <(head -n1 /proc/stat))"
 }
 
 function gpu() {
@@ -61,7 +61,7 @@ if [ "$1" == "volume" ]; then
 elif [ "$1" == "network" ]; then
     network
 elif [ "$1" == "workspaces" ]; then
-    socat -u UNIX-CONNECT:/tmp/hypr/"$HYPRLAND_INSTANCE_SIGNATURE"/.socket2.sock - | while read -r; do
+    socat -u UNIX-CONNECT:"$XDG_RUNTIME_DIR"/hypr/"$HYPRLAND_INSTANCE_SIGNATURE"/.socket2.sock - | while read -r; do
         workspaces
     done
 elif [ "$1" == "cpu" ]; then

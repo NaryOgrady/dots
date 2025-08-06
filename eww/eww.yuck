@@ -1,6 +1,6 @@
 (defvar time_rev false)
-(defpoll clock_time :interval "5m" "date +%I:%M")
-(defpoll clock_date :interval "10h" "date '+%d/%m'")
+(defpoll clock_time :interval "5s" "date +%I:%M")
+(defpoll clock_date :interval "1h" "date '+%d/%m'")
 
 (defvar vol_rev false)
 (defpoll sink :interval "1m" "pactl list sinks short | awk '{print $1}'")
@@ -31,7 +31,6 @@
     (box :class "bar"
         :orientation "h"
     (left2)
-    (center2)     
     (right2)
 ))
 
@@ -98,30 +97,40 @@
   ))))
 
   
-  (defwidget volume []
-  (eventbox :onhover "eww update vol_rev=true"
-			  :onhoverlost "eww update vol_rev=false"
-  (box :class "vol_module" :space-evenly "false" :orientation "h" :spacing "3" 
-  (button :onclick "sh -c 'pactl set-sink-mute ${sink} toggle; eww update vol_mute=${vol_mute == 'yes' ? 'no' : 'yes'}'"
-    (box
-	    (label  :class "icon vol_icon" :text "${vol_mute == 'yes' ? '󰖁' : '󰕾'}")
-    )
-  )
-  (revealer :transition "slideleft"
-            :reveal vol_rev
-            :duration "350ms"
-    (box :orientation "h" :space-evenly false
-	    (scale    :class "volbar"
-			      :value volume_percent
-                  :active true
-			      :orientation "h"
-			      :tooltip "${volume_percent}%"
-			      :max 101
-			      :min 0
-            :onchange "sh -c 'pactl set-sink-mute ${sink} false; pactl set-sink-volume ${sink} {}%; eww update volume_percent={}'"
+(defwidget volume []
+  (eventbox 
+    :onhover "eww update vol_rev=true"
+    :onhoverlost "eww update vol_rev=false"
+
+    (box :class "vol_module" :space-evenly "false" :orientation "h" :spacing "3"
+
+      ;; Mute toggle button
+      (button 
+        :onclick "pactl set-sink-mute @DEFAULT_SINK@ toggle; eww update vol_mute=$(pactl get-sink-mute @DEFAULT_SINK@ | grep -q yes && echo yes || echo no)"
+        (box
+          (label :class "icon vol_icon" :text "${vol_mute == 'yes' ? '󰖁' : '󰕾'}")
+        )
+      )
+
+      ;; Slider revealed on hover
+      (revealer :transition "slideleft" :reveal vol_rev :duration "350ms"
+        (box :orientation "h" :space-evenly false
+          (scale
+            :class "volbar"
+            :value volume_percent
+            :active true
+            :orientation "h"
+            :tooltip "${volume_percent}%"
+            :max 101
+            :min 0
+            :onchange "pactl set-sink-mute @DEFAULT_SINK@ false; pactl set-sink-volume @DEFAULT_SINK@ {}%; eww update volume_percent=$(pactl get-sink-volume @DEFAULT_SINK@ | grep -oP '\\d+%' | head -1 | tr -d '%')"
+          )
+        )
       )
     )
-  ))))
+  )
+)
+
 
 
 (defwidget network []
@@ -195,19 +204,10 @@
       (label :class "icon cpu_icon" :text "")
       (label :text "${round(cpu, 0)}%")
     )
-    (box :orientation "h" :space-evenly false
-      (label :class "icon gpu_icon" :text "󰒇")
-      (label :text "${gpu}")
-    )
     (box :class "disk_monitor" :orientation "h" :space-evenly false
       (label :class "icon disk_icon" :text "󱛟")
       (label :text "/")
       (label :class "value" :text "${root}")
-    )
-    (box :class "disk_monitor" :orientation "h" :space-evenly false
-      (label :class "icon disk_icon" :text "󱛟")
-      (label :text "/home")
-      (label :class "value" :text "${home}")
     )
   )
 )
